@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    const string k_MOUSE_X = "Mouse X";
+    const string k_MOUSE_Y = "Mouse Y";
 
-    // Update is called once per frame
+    [SerializeField]
+    float sensitivity = 10f;
+
+    Vector2 currentRotation;
+
     void Update()
     {
-        
+        currentRotation.x += Input.GetAxis(k_MOUSE_X) * sensitivity;
+        currentRotation.y -= Input.GetAxis(k_MOUSE_Y) * sensitivity;
+
+        currentRotation.x = Mathf.Repeat(currentRotation.x, 360);
+
+        Camera.main.transform.rotation = Quaternion.Euler(currentRotation.y, currentRotation.x, 0);
     }
 }
